@@ -1,0 +1,11 @@
+sample  location    condition
+B6-4    B64.R1.fq.gz_quant  B6
+B6-5    B65.R1.fq.gz_quant  B6
+B6-6    B66.R1.fq.gz_quant  B6
+10.3-4  1034.R1.fq.gz_quant 10.3
+10.3-5  1035.R1.fq.gz_quant 10.3
+10.3-6  1036.R1.fq.gz_quant 10.3
+FL10-1  FL101.R1.fq.gz_quant    FL10
+FL10-2  FL102.R1.fq.gz_quant    FL10
+FL10-3  FL103.R1.fq.gz_quant    FL10
+
