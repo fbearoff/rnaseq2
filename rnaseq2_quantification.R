@@ -19,7 +19,7 @@ sampleTable <- data.frame(condition = samples$condition) #make condition table
 rownames(sampleTable) <- colnames(txi$counts) #add sample names to condition table
 dds <- DESeqDataSetFromTximport(txi, sampleTable, ~condition) #prepare DESeq2 file for import
 dds <- DESeq(dds) #do differential expression
-res <- results(dds, contrast=c("condition","B6","10.3")) #store results of above as res, PICK CONDITIONS HERE
+res <- results(dds, contrast=c("condition","10.3","FL10")) #store results of above as res, PICK CONDITIONS HERE
 
 
 gene_synonym <- unique(tx2gene[, -1])
@@ -31,10 +31,17 @@ head(gene_synonym$gene_id[match(rownames(res), gene_synonym$gene_id)])
 z <- data.frame(res)
 z$gene_symbol <- gene_synonym$gene_symbol[match(rownames(res), gene_synonym$gene_id)]
 z$gene_biotype <- gene_synonym$gene_biotype[match(rownames(res), gene_synonym$gene_id)]
+z$mgi_id <- gene_synonym$mgi_id[match(rownames(res), gene_synonym$gene_id)]
+z$chr <- gene_synonym$chr[match(rownames(res), gene_synonym$gene_id)]
+z$start <- gene_synonym$start[match(rownames(res), gene_synonym$gene_id)]
+z$end <- gene_synonym$end[match(rownames(res), gene_synonym$gene_id)]
+z$description <- gene_synonym$description[match(rownames(res), gene_synonym$gene_id)]
 write.csv(z, "res.csv")
 
 # Show change in expression by mean expression level
 # Would be better normalized to feature size
+library(ggplot2)
+
 p <- ggplot(z, aes(x = baseMean + 0.01, y = log2FoldChange, 
                    col = paste(padj < 0.05, is.na(padj)),
                    shape = paste(padj < 0.05, is.na(padj))))
